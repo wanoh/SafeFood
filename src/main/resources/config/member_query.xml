@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mem">
+
+
+
+	<select id="checkLogin" parameterType="java.lang.String"
+		resultType="member">
+		select * from member where id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="member">
+		insert into member(id, pass,
+		name, email, allergy,type,age)
+		values(#{id},#{pass},#{name},#{email},#{allergy},#{type},#{age})
+	</insert>
+
+	<select id="selectEmail" parameterType="java.lang.String"
+		resultType="member">
+		select email from member where id = #{id}
+	</select>
+
+	<select id="checktype" parameterType="java.lang.String"
+		resultType="member">
+		select * from member where id = #{id}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.String">
+		delete from member where id =
+		#{id}
+	</delete>
+
+	<select id="allergyPriority" resultType="member">
+		select allergy from
+		member
+	</select>
+
+	<select id="findbyEmail" parameterType="java.lang.String"
+		resultType="member">
+		select id, pass from member where email=#{email}
+	</select>
+	<update id="updateInfo" parameterType="member">
+		update member set pass =
+		#{pass}, name = #{name},
+		allergy = #{allergy} where id = #{id}
+	</update>
+
+	<select id="selectAllergy" parameterType="java.lang.String" resultType="String">
+		select allergy from member where id = #{id}
+	</select>
+	
+	<select id="listEat" resultType="eat">
+		select * from eatlist where id=#{id}
+	</select>
+	
+	<select id="findname" resultType="eat">
+		select * from food where code = #{code}
+	</select>
+	
+	<delete id="resetEat">
+		delete from eatlist where id=#{id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+

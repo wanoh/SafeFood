@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="foodl">
+
+	<select id="selectAll" parameterType="String" resultType="foodinfo">
+		select * from food where code in (select code from mylist where id = #{id})
+	</select>
+	
+	<insert id="insert" parameterType="java.util.Map">
+		insert into mylist (id, code) values 
+		(#{id}, #{code})
+	</insert>
+	
+	<delete id="delete" parameterType="java.util.Map">
+		delete from mylist where code = #{code} and id = #{id}
+	</delete>
+	
+	<insert id="insertml">
+		insert into managerlist (id, code) values 
+		(#{id}, #{code})
+	</insert>
+	
+	<select id="selectAllp" parameterType="String" resultType="foodinfo">
+		select * from food where code in (select code from managerlist where id = #{id})
+	</select>
+	
+	<insert id="insertlink" >
+		insert into link ( link, code) values 
+		(#{link}, #{code})
+	</insert>
+	
+	<update id="updatefood" parameterType="java.lang.String">
+		update food set allergy="true"  where code = #{code}
+	</update>
+	
+	<select id="selectlink"  resultType="link">
+		select * from link where code=#{code}
+	</select>
+	
+	<delete id="deletelink">
+		delete from link where code = #{code}
+	</delete>
+	
+	<update id="updatefoodflase">
+		update food set allergy="false"  where code = #{code}
+	</update>
+	
+	<select id="getlinkone" resultType="link">
+		select * from link where code = #{code}
+	</select>
+	<delete id="addfooddelete1" parameterType="String">
+		delete from managerlist where id = #{id} and code = #{code}
+	</delete>
+	<delete id="addfooddelete2" parameterType="String">
+		delete from food where code = #{code}
+	</delete>
+	
+	<select id="getPlist" resultType="foodinfo">
+		select * from managerlist where id = #{id}
+	</select>
+	
+	<select id="fone" resultType="foodinfo">
+		select * from food where code=#{code}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+

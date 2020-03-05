@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.pms">
+
+	<select id="selectAll" resultType="foodinfo">
+		select*from food
+	</select>
+
+<select id="selectOne" parameterType="java.lang.String"	resultType="foodinfo">
+		select *
+		from food 
+		where code=#{code}
+	</select>
+	
+	<select id="selectAllbyname" 	resultType="foodinfo">
+		select* from food where name like concat('%',#{word},'%') 
+	</select>
+	
+	<select id="selectAllbymaterial" 	resultType="foodinfo">
+		select* from food where material like concat('%',#{word},'%') 
+	</select>
+	
+	<update id="countUp">
+		update food set count = count +1 where code=#{code}
+	</update>
+	<select id="bestPro" resultType="foodinfo">
+		select
+		*
+		from
+		food
+		order by count desc
+		limit 1;
+	</select> 
+	
+	<select id="mbestPro" resultType="foodinfo" parameterType="String">
+		select * from food
+		where code in (select code from managerlist where id = #{id}) 
+		order by count desc
+		limit 1;
+	</select>
+	
+	<select id="mhowcount" resultType="foodinfo" parameterType="String">
+		select * from food
+		where code in (select code from managerlist where id = #{id}) 
+	</select>
+	
+	<select id="chowcount" resultType="foodinfo">
+		select * from food
+	</select>
+		
+	<insert id="insertFood" parameterType="foodinfo">
+		insert into food
+		values(0,#{name},#{supportpereat},#{calory},#{carbo}
+		,#{protein},#{fat},#{sugar},#{natrium},#{chole},#{fattyacid},#{transfat},#{maker},#{material}
+		,#{img},#{allergy},#{count},#{average})
+	</insert>
+	
+	<select id="findlastinserted" resultType="foodinfo">
+	select
+	*
+	from
+	food
+	order by code desc
+	limit 1;
+	</select>
+	
+	<select id="selectbyid" resultType="eat">
+	 	select * from eatlist where id =#{id}
+	</select>
+	
+	<update id="updateEat">
+		update eatlist set n = n+1 where num=#{num}
+	</update>
+	<update id="updatedateEat">
+		update eatlist set eat_date = sysdate() where num=#{num}
+	</update>
+	
+	<insert id="insertEat" parameterType="java.util.Map">
+		insert into eatlist 
+		values(0,#{id},#{code},sysdate(),1)
+	</insert>
+	
+	<update id="updateaver" parameterType="java.util.Map">
+		update food set average = average+#{age} where code=#{code}
+	</update>
+	
+	<select id="getage" resultType="member" >
+		select * from member where id=#{id}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
